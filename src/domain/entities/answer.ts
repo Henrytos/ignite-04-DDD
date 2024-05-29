@@ -1,5 +1,4 @@
 import { randomUUID } from "crypto";
-
 export class Answer {
     public id: string;
     public content: string;

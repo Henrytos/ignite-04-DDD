@@ -1,5 +1,4 @@
 import { randomUUID } from "crypto"
-
 export class Student {
     private id: string
     private name: string
