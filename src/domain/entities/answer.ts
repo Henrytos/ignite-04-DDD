@@ -4,6 +4,8 @@ interface AnswerProps {
     content: string
     authorId: string
     questionId: string
+    createdAt: Date
+    updatedAt?: Date
 }
 
 export class Answer extends Entity<AnswerProps> {
