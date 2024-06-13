@@ -16,7 +16,7 @@ test('', () => {
     const answer = answerQuestion.execute({
         instructorId: '1',
         questionId: '1',
-        content: 'olá está errado por isto......'
+        content: 'olá está errado por isto......',
     })
 
     expect(answer.content).toEqual('olá está errado por isto......')
