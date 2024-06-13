@@ -12,7 +12,5 @@ export class Answer extends Entity<AnswerProps> {
         return this.props.content
     }
 
-    constructor(props: AnswerProps, id?: string) {
-        super(props, id)
-    }
+
 }
