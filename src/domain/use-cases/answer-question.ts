@@ -10,7 +10,7 @@ export class AnswerQuestionUseCase {
 
     constructor(private answersRepository: AnswersRepository) { }
     execute({ instructorId, questionId, content }: AnswerQuestionUseCaseRequest) {
-        const answer = new Answer({
+        const answer = Answer.create({
             content,
             authorId: instructorId,
             questionId,
