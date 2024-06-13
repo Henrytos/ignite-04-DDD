@@ -31,7 +31,6 @@ export class Answer extends Entity<AnswerProps> {
         return this.props.createdAt
     }
 
-
     private touch() {
         this.props.updatedAt = new Date()
     }
@@ -40,8 +39,6 @@ export class Answer extends Entity<AnswerProps> {
         this.props.content = content
         this.touch
     }
-
-
 
     get excerpt() {
         return this.content.substring(0, 120).trimEnd().concat('....')

@@ -41,6 +41,10 @@ export class Question extends Entity<QuestionProps> {
         return this.props.createdAt
     }
 
+    get updatedAt() {
+        return this.props.updatedAt
+    }
+
 
     private touch() {
         this.props.updatedAt = new Date()
