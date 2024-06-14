@@ -1,20 +1,16 @@
-import { QuestionRepository } from "../repositories/question-repository"
 import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questions-repository"
-import { GetQuestionBySlug } from "./get-question-by-slug"
-import { Question } from "../../enterprise/entities/question"
-import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { Slug } from "../../enterprise/entities/value-objects/slug"
+import { GetQuestionBySlugUseCase } from "./get-question-by-slug"
 import { makeQuestion } from "test/factories/make-question"
 
 
-let inMemoryQuestionRepository: QuestionRepository
-let sut: GetQuestionBySlug
+let inMemoryQuestionRepository: InMemoryQuestionsRepository
+let sut: GetQuestionBySlugUseCase
 
 describe('create question use case (UNIT)', () => {
 
     beforeEach(() => {
         inMemoryQuestionRepository = new InMemoryQuestionsRepository()
-        sut = new GetQuestionBySlug(inMemoryQuestionRepository)
+        sut = new GetQuestionBySlugUseCase(inMemoryQuestionRepository)
     })
 
     it('should be able create question', async () => {
