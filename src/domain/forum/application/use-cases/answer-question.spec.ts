@@ -3,14 +3,14 @@ import { AnswerQuestionUseCase } from './answer-question'
 import { AnswersRepository } from '../repositories/answers-repository'
 import { InMemoryAnswersRepository } from 'test/repositories/in-memory-answers'
 
-let answersRepository: AnswersRepository
+let inMemoryAnswersRepository: AnswersRepository
 let sut: AnswerQuestionUseCase
 
 describe('answer question use case (UNIT)', () => {
 
   beforeEach(() => {
-    answersRepository = new InMemoryAnswersRepository()
-    sut = new AnswerQuestionUseCase(answersRepository)
+    inMemoryAnswersRepository = new InMemoryAnswersRepository()
+    sut = new AnswerQuestionUseCase(inMemoryAnswersRepository)
   })
   it('', async () => {
 
