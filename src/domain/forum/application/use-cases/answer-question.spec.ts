@@ -15,10 +15,10 @@ describe('answer question use case (UNIT)', () => {
     const { answer } = await sut.execute({
       instructorId: '1',
       questionId: '1',
-      content: 'olá está errado por isto......',
+      content: 'example content',
     })
 
-    expect(answer.content).toEqual('olá está errado por isto......')
+    expect(answer.content).toEqual('example content')
 
   })
 })
