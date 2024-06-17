@@ -12,9 +12,10 @@ describe('edit question use case (UNIT)', () => {
     beforeEach(() => {
         inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
         sut = new EditQuestionUseCase(inMemoryQuestionsRepository)
+
     })
 
-    it('should be able delete question', async () => {
+    it('should be able edit question', async () => {
 
         const newQuestion = makeQuestion({
             authorId: new UniqueEntityID('author-01'),
@@ -33,4 +34,23 @@ describe('edit question use case (UNIT)', () => {
             content: 'content'
         })
     })
+
+    it('should be able edit question where author id invalid', async () => {
+
+
+        const newQuestion = makeQuestion({
+            authorId: new UniqueEntityID('author-01'),
+        }, 'question-01')
+
+        inMemoryQuestionsRepository.create(newQuestion)
+
+        await expect(sut.execute({
+            questionId: newQuestion.id.toValue(),
+            authorId: 'author-02',
+            content: 'content',
+            title: 'question'
+        })).rejects.toBeInstanceOf(Error)
+    })
+
+
 })

@@ -6,14 +6,14 @@ import { makeQuestion } from "test/factories/make-question"
 let inMemoryQuestionRepository: InMemoryQuestionsRepository
 let sut: GetQuestionBySlugUseCase
 
-describe('create question use case (UNIT)', () => {
+describe('get question by slug use case (UNIT)', () => {
 
     beforeEach(() => {
         inMemoryQuestionRepository = new InMemoryQuestionsRepository()
         sut = new GetQuestionBySlugUseCase(inMemoryQuestionRepository)
     })
 
-    it('should be able create question', async () => {
+    it('should be able get question by slug', async () => {
 
         const newQuestion = makeQuestion()
 
