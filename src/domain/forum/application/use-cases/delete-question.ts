@@ -1,6 +1,4 @@
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Question } from "../../enterprise/entities/question";
-import { QuestionRepository } from "../repositories/question-repository";
+import { QuestionsRepository } from "../repositories/question-repository";
 
 interface DeleteQuestionUseCaseRequest {
     authorId: string;
@@ -10,14 +8,14 @@ interface DeleteQuestionUseCaseResponse {
 }
 
 export class DeleteQuestionUseCase {
-    constructor(private questionRepository: QuestionRepository) { }
+    constructor(private questionsRepository: QuestionsRepository) { }
 
     async execute({
         authorId,
         questionId
     }: DeleteQuestionUseCaseRequest): Promise<DeleteQuestionUseCaseResponse> {
 
-        const question = await this.questionRepository.findById(questionId)
+        const question = await this.questionsRepository.findById(questionId)
 
         if (!question) {
             throw new Error('Question not found')
@@ -27,7 +25,7 @@ export class DeleteQuestionUseCase {
             throw new Error('Unauthorized')
         }
 
-        await this.questionRepository.delete(question)
+        await this.questionsRepository.delete(question)
 
         return {
 
