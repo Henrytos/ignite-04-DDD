@@ -3,6 +3,8 @@ import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { InMemoryAnswersRepository } from "test/repositories/in-memory-answers-repository"
 import { DeleteAnswerUseCase } from "./delete-answer"
 import { makeAnswer } from "test/factories/make-answer"
+import { NotAllowedError } from "./errors/not-allowed-error"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
 
 
 let inMemoryAnswersRepository: InMemoryAnswersRepository
@@ -38,22 +40,24 @@ describe('delete answer use case (UNIT)', () => {
 
         inMemoryAnswersRepository.create(newAnswer)
 
-        await expect(() => {
-            return sut.execute({
-                authorId: 'author-id-invalid',
-                answerId: 'answer-01'
-            })
-        }).rejects.toBeInstanceOf(Error)
+        const result = await sut.execute({
+            authorId: 'author-id-invalid',
+            answerId: 'answer-01'
+        })
+
+        expect(result.isLeft()).toBe(true)
+        expect(result.value).toBeInstanceOf(NotAllowedError)
     })
 
 
     it('should not be able delete answer-id-invalid', async () => {
-        await expect(() => {
-            return sut.execute({
-                authorId: 'author-id-invalid',
-                answerId: 'answer-id-invalid'
-            })
-        }).rejects.toBeInstanceOf(Error)
+        const result = await sut.execute({
+            authorId: 'author-id-invalid',
+            answerId: 'answer-id-invalid'
+        })
+
+        expect(result.isLeft()).toBe(true)
+        expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     })
 
 

@@ -11,11 +11,19 @@ describe('create question use case (UNIT)', () => {
     })
 
     it('should be able create question', async () => {
-        const { question } = await sut.execute({
+
+        const result = await sut.execute({
             authorId: '1',
             title: 'create my primary code',
             content: 'hello world'
         })
-        expect(question.authorId).toBeTruthy()
+
+        expect(result.isRight()).toEqual(true)
+        expect(inMemoryQuestionRepository.items[0]).toEqual(expect.objectContaining({
+            id: result.value?.question.id,
+            authorId: result.value?.question.authorId,
+            title: 'create my primary code',
+            content: 'hello world'
+        }))
     })
 })

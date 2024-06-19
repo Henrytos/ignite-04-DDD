@@ -2,6 +2,8 @@ import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questio
 import { DeleteQuestionUseCase } from "./delete-question"
 import { makeQuestion } from "test/factories/make-question"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { NotAllowedError } from "./errors/not-allowed-error"
+import { ResourceNotFoundError } from "./errors/resource-not-found-error"
 
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -37,22 +39,31 @@ describe('delete question use case (UNIT)', () => {
 
         inMemoryQuestionsRepository.create(newQuestion)
 
-        await expect(() => {
-            return sut.execute({
-                authorId: 'author-id-invalid',
-                questionId: 'question-01'
-            })
-        }).rejects.toBeInstanceOf(Error)
+        const result = await sut.execute({
+            authorId: 'author-id-invalid',
+            questionId: 'question-01'
+        })
+
+        expect(result.isLeft()).toEqual(true)
+        expect(result.value).toBeInstanceOf(NotAllowedError)
     })
 
 
-    it('should not be able delete question-id-invalid', async () => {
-        await expect(() => {
-            return sut.execute({
-                authorId: 'author-id-invalid',
-                questionId: 'question-id-invalid'
-            })
-        }).rejects.toBeInstanceOf(Error)
+    it('should not be able delete author id invalid', async () => {
+
+
+        const newQuestion = makeQuestion({
+            authorId: new UniqueEntityID('author-01')
+        }, 'question-02')
+
+
+        const result = await sut.execute({
+            authorId: 'author-id-invalid',
+            questionId: 'question-01'
+        })
+
+        expect(result.isLeft()).toEqual(true)
+        expect(result.value).toBeInstanceOf(ResourceNotFoundError)
     })
 
 

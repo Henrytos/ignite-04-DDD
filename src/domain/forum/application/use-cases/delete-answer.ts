@@ -1,7 +1,7 @@
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Answer } from "../../enterprise/entities/answer";
 import { AnswersRepository } from "../repositories/answers-repository";
-import { Either, right } from "@/core/either";
+import { Either, left, right } from "@/core/either";
 import { NotAllowedError } from "./errors/not-allowed-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
@@ -23,11 +23,11 @@ export class DeleteAnswerUseCase {
         const answer = await this.answerRepository.findById(answerId)
 
         if (!answer) {
-            return right(new ResourceNotFoundError())
+            return left(new ResourceNotFoundError())
         }
 
         if (!(answer.authorId.toString() === authorId)) {
-            return right(new NotAllowedError())
+            return left(new NotAllowedError())
         }
 
         await this.answerRepository.delete(answer)

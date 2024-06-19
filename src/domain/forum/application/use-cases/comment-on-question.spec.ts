@@ -21,13 +21,14 @@ describe('create question use case (UNIT)', () => {
         const question = makeQuestion({ authorId: new UniqueEntityID('author-1') })
         await inMemoryQuestionsRepository.create(question)
 
-        const { questionComment } = await sut.execute({
+        const result = await sut.execute({
             authorId: question.authorId.toValue(),
             content: 'example content',
             questionId: question.id.toValue()
         })
 
-        expect(questionComment).toEqual(expect.objectContaining({
+        expect(result.isRight()).toEqual(true)
+        expect(inMemoryQuestionCommentRepository.items[0]).toEqual(expect.objectContaining({
             questionId: question.id,
             content: 'example content'
         }))

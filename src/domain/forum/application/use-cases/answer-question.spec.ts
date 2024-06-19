@@ -12,13 +12,13 @@ describe('answer question use case (UNIT)', () => {
   })
   it('', async () => {
 
-    const { answer } = await sut.execute({
+    const result = await sut.execute({
       instructorId: '1',
       questionId: '1',
       content: 'example content',
     })
 
-    expect(answer.content).toEqual('example content')
+    expect(result.value?.answer.content).toEqual('example content')
 
   })
 })

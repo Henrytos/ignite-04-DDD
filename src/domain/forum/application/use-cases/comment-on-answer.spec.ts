@@ -20,15 +20,19 @@ describe('create answer use case (UNIT)', () => {
         const answer = makeAnswer({ authorId: new UniqueEntityID('author-1') })
         await inMemoryAnswersRepository.create(answer)
 
-        const { answerComment } = await sut.execute({
+        const result = await sut.execute({
             authorId: answer.authorId.toValue(),
             content: 'example content',
             answerId: answer.id.toValue()
         })
 
-        expect(answerComment).toEqual(expect.objectContaining({
-            answerId: answer.id,
-            content: 'example content'
-        }))
+        expect(result.isRight()).toEqual(true)
+        expect(inMemoryAnswerCommentRepository.items[0]).toEqual(
+            expect.objectContaining({
+                authorId: answer.authorId,
+                answerId: answer.id
+
+            })
+        )
     })
 })
