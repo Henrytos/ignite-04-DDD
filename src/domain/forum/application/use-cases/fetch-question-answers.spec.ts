@@ -26,12 +26,12 @@ describe('fetch question answer  use case (UNIT)', () => {
             makeAnswer({ questionId: new UniqueEntityID('author-1') })
         )
 
-        const { answers } = await sut.execute({
+        const result = await sut.execute({
             page: 1,
             questionId: 'author-1'
         })
 
-        expect(answers).toHaveLength(3)
+        expect(result.value?.answers).toHaveLength(3)
 
     })
 
@@ -42,12 +42,12 @@ describe('fetch question answer  use case (UNIT)', () => {
             )
         }
 
-        const { answers } = await sut.execute({
+        const result = await sut.execute({
             page: 2,
             questionId: 'author-1'
         })
 
-        expect(answers).toHaveLength(2)
+        expect(result.value?.answers).toHaveLength(2)
     })
 
 })

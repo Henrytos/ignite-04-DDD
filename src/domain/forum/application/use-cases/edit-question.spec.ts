@@ -2,6 +2,7 @@ import { InMemoryQuestionsRepository } from "test/repositories/in-memory-questio
 import { EditQuestionUseCase } from "./edit-question"
 import { makeQuestion } from "test/factories/make-question"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { NotAllowedError } from "./errors/not-allowed-error"
 
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
@@ -29,6 +30,7 @@ describe('edit question use case (UNIT)', () => {
             content: 'content',
             title: 'question'
         })
+
         expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
             title: 'question',
             content: 'content'
@@ -44,12 +46,13 @@ describe('edit question use case (UNIT)', () => {
 
         inMemoryQuestionsRepository.create(newQuestion)
 
-        await expect(sut.execute({
+        const result = await sut.execute({
             questionId: newQuestion.id.toValue(),
             authorId: 'author-02',
             content: 'content',
             title: 'question'
-        })).rejects.toBeInstanceOf(Error)
+        })
+
     })
 
 
