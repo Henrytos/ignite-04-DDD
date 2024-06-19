@@ -4,8 +4,8 @@ import { AnswerCommentsRepository } from "../repositories/answer-comments-reposi
 interface DeleteAnswerCommentUseCaseRequest {
     answerCommentId: string;
     authorId: string;
-
 }
+
 type DeleteAnswerCommentUseCaseResponse = Either<string, {}>
 
 export class DeleteAnswerCommentUseCase {
@@ -15,7 +15,9 @@ export class DeleteAnswerCommentUseCase {
         authorId,
         answerCommentId,
     }: DeleteAnswerCommentUseCaseRequest): Promise<DeleteAnswerCommentUseCaseResponse> {
+
         const answerComment = await this.answerCommentsRepository.findById(answerCommentId)
+
         if (!(answerComment?.authorId.toValue() == authorId)) {
             return left('User not allowed to delete this comment')
         }
