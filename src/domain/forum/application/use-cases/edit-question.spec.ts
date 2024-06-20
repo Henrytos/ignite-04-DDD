@@ -3,57 +3,74 @@ import { EditQuestionUseCase } from "./edit-question"
 import { makeQuestion } from "test/factories/make-question"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { NotAllowedError } from "./errors/not-allowed-error"
+import { InMemoryQuestionAttachmentsRepository } from "test/repositories/in-memory-question-attachments-repository"
+import { makeQuestionAttachment } from "test/factories/make-question-attachment"
 
 
 let inMemoryQuestionsRepository: InMemoryQuestionsRepository
+let inMemoryQuestionAttachmentRepository: InMemoryQuestionAttachmentsRepository
+
 let sut: EditQuestionUseCase
 
 describe('edit question use case (UNIT)', () => {
 
     beforeEach(() => {
         inMemoryQuestionsRepository = new InMemoryQuestionsRepository()
-        sut = new EditQuestionUseCase(inMemoryQuestionsRepository)
-
+        inMemoryQuestionAttachmentRepository = new InMemoryQuestionAttachmentsRepository()
+        sut = new EditQuestionUseCase(inMemoryQuestionsRepository, inMemoryQuestionAttachmentRepository)
     })
 
     it('should be able edit question', async () => {
 
-        const newQuestion = makeQuestion({
+        const question = makeQuestion({
             authorId: new UniqueEntityID('author-01'),
         }, 'question-01')
 
-        inMemoryQuestionsRepository.create(newQuestion)
+        inMemoryQuestionsRepository.create(question)
+        inMemoryQuestionAttachmentRepository.items.push(
+            makeQuestionAttachment({
+                questionId: question.id,
+                attachmentId: new UniqueEntityID('1')
+            }),
+            makeQuestionAttachment({
+                questionId: question.id,
+                attachmentId: new UniqueEntityID('2')
+            }))
 
         await sut.execute({
-            questionId: newQuestion.id.toValue(),
+            questionId: question.id.toValue(),
             authorId: 'author-01',
             content: 'content',
-            title: 'question'
+            title: 'question',
+            attachmentsIds: ['1', '3']
         })
 
-        expect(inMemoryQuestionsRepository.items[0]).toMatchObject({
-            title: 'question',
-            content: 'content'
-        })
+        expect(inMemoryQuestionsRepository.items[0].attachments.currentItems).toHaveLength(2)
+        expect(inMemoryQuestionsRepository.items[0].attachments.currentItems).toEqual([
+            expect.objectContaining({ attachmentId: new UniqueEntityID('1') }),
+            expect.objectContaining({ attachmentId: new UniqueEntityID('3') })
+        ])
+
     })
 
     it('should be able edit question where author id invalid', async () => {
 
 
-        const newQuestion = makeQuestion({
+        const question = makeQuestion({
             authorId: new UniqueEntityID('author-01'),
         }, 'question-01')
 
-        inMemoryQuestionsRepository.create(newQuestion)
+        inMemoryQuestionsRepository.create(question)
 
         const result = await sut.execute({
-            questionId: newQuestion.id.toValue(),
+            questionId: question.id.toValue(),
             authorId: 'author-02',
             content: 'content',
-            title: 'question'
+            title: 'question',
+            attachmentsIds: []
         })
 
+        expect(result.isLeft()).toEqual(true)
+        expect(result.isRight()).toEqual(false)
     })
-
-
 })
