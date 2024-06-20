@@ -4,6 +4,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import dayjs from 'dayjs'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { QuestionAttachment } from './question-attachment'
+import { QuestionAttachmentList } from '../question-attachment-list'
 
 export interface QuestionProps {
   authorId: UniqueEntityID
@@ -11,7 +12,7 @@ export interface QuestionProps {
   content: string
   slug: Slug
   title: string
-  attachments: QuestionAttachment[]
+  attachments: QuestionAttachmentList
   createdAt: Date
   updatedAt?: Date
 }
@@ -72,7 +73,8 @@ export class Question extends AggregateRoot<QuestionProps> {
   get attachments() {
     return this.props.attachments
   }
-  set attachments(attachments: QuestionAttachment[]) {
+
+  set attachments(attachments: QuestionAttachmentList) {
     this.props.attachments = attachments
   }
 
@@ -87,7 +89,7 @@ export class Question extends AggregateRoot<QuestionProps> {
   ) {
     const question = new Question(
       {
-        attachments: props.attachments ?? [],
+        attachments: props.attachments ?? new QuestionAttachmentList(),
         slug: props.slug ?? Slug.createFromText(props.title),
         createdAt: props.createdAt ?? new Date(),
         ...props
