@@ -3,7 +3,9 @@ import { InMemoryAnswersRepository } from "test/repositories/in-memory-answers-r
 import { makeAnswer } from "test/factories/make-answer"
 import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { InMemoryAnswerCommentsRepository } from "test/repositories/in-memory-answer-comments-repository"
+import { InMemoryAnswerAttachmentsRepository } from "test/repositories/in-memory-answer-attachments-repository"
 
+let inMemoryAnswerAttachmentsRepository: InMemoryAnswerAttachmentsRepository
 let inMemoryAnswerCommentRepository: InMemoryAnswerCommentsRepository
 let inMemoryAnswersRepository: InMemoryAnswersRepository
 
@@ -12,7 +14,8 @@ let sut: CommentOnAnswerUseCase
 describe('create answer use case (UNIT)', () => {
     beforeEach(() => {
         inMemoryAnswerCommentRepository = new InMemoryAnswerCommentsRepository()
-        inMemoryAnswersRepository = new InMemoryAnswersRepository()
+        inMemoryAnswerAttachmentsRepository = new InMemoryAnswerAttachmentsRepository()
+        inMemoryAnswersRepository = new InMemoryAnswersRepository(inMemoryAnswerAttachmentsRepository)
         sut = new CommentOnAnswerUseCase(inMemoryAnswersRepository, inMemoryAnswerCommentRepository)
     })
 
