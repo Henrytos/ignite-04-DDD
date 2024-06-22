@@ -4,7 +4,7 @@ import { QuestionsRepository } from "../repositories/question-repository";
 import { QuestionCommentsRepository } from "../repositories/question-comments-repository";
 import { QuestionComment } from "../../enterprise/entities/question-comment";
 import { Either, left, right } from "@/core/either";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { ResourceNotFoundError } from "@/core/errors/resource-not-found-error";
 
 interface CommentOnQuestionUseCaseRequest {
     questionId: string;
