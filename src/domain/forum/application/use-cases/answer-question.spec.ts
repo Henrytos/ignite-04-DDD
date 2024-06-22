@@ -37,6 +37,7 @@ describe('answer question use case (UNIT)', () => {
       })
     )
 
+    console.log(inMemoryAnswersRepository.items[0].attachments)
 
     expect(result.value?.answer.content).toEqual('example content')
     expect(result.value?.answer.attachments.currentItems).toHaveLength(2)
