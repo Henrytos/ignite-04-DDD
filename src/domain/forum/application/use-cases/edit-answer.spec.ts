@@ -29,7 +29,7 @@ describe('Edit Answer', () => {
             {
                 authorId: new UniqueEntityID('author-1'),
             },
-            'answer-1'
+            new UniqueEntityID('answer-1')
         )
 
         await inMemoryAnswersRepository.create(newAnswer)
@@ -69,7 +69,7 @@ describe('Edit Answer', () => {
             {
                 authorId: new UniqueEntityID('author-1'),
             },
-            'answer-1'
+            new UniqueEntityID('answer-1')
         )
 
         await inMemoryAnswersRepository.create(newAnswer)

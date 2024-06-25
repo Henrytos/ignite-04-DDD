@@ -70,11 +70,13 @@ export class Answer extends AggregateRoot<AnswerProps> {
       },
       id,
     )
-
     const isNewAnswer = !id
+
     if (isNewAnswer) {
+      console.log('New answer created!')
       answer.addDomainEvent(new AnswerCreatedEvent(answer))
     }
+
     return answer
   }
 }
