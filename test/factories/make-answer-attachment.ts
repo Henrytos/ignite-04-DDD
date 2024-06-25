@@ -6,7 +6,7 @@ import {
 
 export function makeAnswerAttachment(
     override: Partial<AnswerAttachmentProps> = {},
-    id?: string,
+    id?: UniqueEntityID,
 ) {
     const answerAttachment = AnswerAttachment.create(
         {
@@ -14,7 +14,7 @@ export function makeAnswerAttachment(
             attachmentId: new UniqueEntityID(),
             ...override,
         },
-        new UniqueEntityID(id),
+        id
     )
 
     return answerAttachment

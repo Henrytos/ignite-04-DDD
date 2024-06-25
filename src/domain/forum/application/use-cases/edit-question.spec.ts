@@ -23,7 +23,7 @@ describe('edit question use case (UNIT)', () => {
 
         const question = makeQuestion({
             authorId: new UniqueEntityID('author-01'),
-        }, 'question-01')
+        }, new UniqueEntityID('question-01'))
 
         inMemoryQuestionAttachmentsRepository.items.push(
             makeQuestionAttachment({
@@ -58,7 +58,7 @@ describe('edit question use case (UNIT)', () => {
 
         const question = makeQuestion({
             authorId: new UniqueEntityID('author-01'),
-        }, 'question-01')
+        }, new UniqueEntityID('question-01'))
 
         inMemoryQuestionsRepository.create(question)
 

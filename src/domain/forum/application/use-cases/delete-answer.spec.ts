@@ -25,7 +25,7 @@ describe('delete answer use case (UNIT)', () => {
 
         const newAnswer = makeAnswer({
             authorId: new UniqueEntityID('author-01')
-        }, 'answer-01')
+        }, new UniqueEntityID('answer-01'))
 
         inMemoryAnswersRepository.create(newAnswer)
         await sut.execute({
@@ -40,7 +40,7 @@ describe('delete answer use case (UNIT)', () => {
 
         const newAnswer = makeAnswer({
             authorId: new UniqueEntityID('author-01')
-        }, 'answer-01')
+        }, new UniqueEntityID('answer-01'))
 
         inMemoryAnswersRepository.create(newAnswer)
 

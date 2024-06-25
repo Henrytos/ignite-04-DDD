@@ -23,7 +23,7 @@ describe('delete question use case (UNIT)', () => {
 
         const newQuestion = makeQuestion({
             authorId: new UniqueEntityID('author-01')
-        }, 'question-01')
+        }, new UniqueEntityID('question-01'))
 
         inMemoryQuestionsRepository.create(newQuestion)
 
@@ -53,7 +53,7 @@ describe('delete question use case (UNIT)', () => {
 
         const newQuestion = makeQuestion({
             authorId: new UniqueEntityID('author-01')
-        }, 'question-01')
+        }, new UniqueEntityID('question-01'))
 
         inMemoryQuestionsRepository.create(newQuestion)
 
@@ -72,7 +72,7 @@ describe('delete question use case (UNIT)', () => {
 
         const newQuestion = makeQuestion({
             authorId: new UniqueEntityID('author-01')
-        }, 'question-02')
+        }, new UniqueEntityID('question-02'))
 
 
         const result = await sut.execute({
